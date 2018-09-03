@@ -4,7 +4,7 @@ set -x
 
 if [ $TRAVIS_BRANCH == 'travis' ] ; then
     # Add remote
-    scp api/.env git@notrailers.com:/var/www/staging.notrailers.com
+    scp api/.env git@notrailers.com:/var/www/staging.notrailers.com/api
 
     git remote add deploy "git@notrailers.com:/home/git/www"
     git config user.name "Travis CI"
