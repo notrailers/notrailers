@@ -2,7 +2,7 @@ require('dotenv').config()
 
 module.exports = {
   development: {
-    debug: true,
+    // debug: true,
     client: 'pg',
     connection: {
       host: process.env.DATABASE_HOST_DEVELOPMENT,

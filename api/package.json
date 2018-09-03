@@ -24,13 +24,18 @@
     "eslint-plugin-import": "2.14.0"
   },
   "dependencies": {
+    "axios": "0.18.0",
+    "axios-middleware": "0.3.1",
     "config": "2.0.1",
     "cors": "2.8.4",
     "dotenv": "6.0.0",
     "express": "4.16.3",
     "ip": "1.1.5",
     "knex": "0.15.2",
+    "lodash.difference": "4.5.0",
+    "mem": "4.0.0",
     "pg": "7.4.3",
+    "stats-map": "1.0.0",
     "strpad": "1.0.2"
   }
 }
