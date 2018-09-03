@@ -1,0 +1,36 @@
+{
+  "name": "no-trailers-api",
+  "version": "0.1.0",
+  "description": "No Trailers API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/notrailers/notrailers.git"
+  },
+  "author": "Donald Geddes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/notrailers/notrailers/issues"
+  },
+  "homepage": "https://github.com/notrailers/notrailers#readme",
+  "devDependencies": {
+    "babel-core": "6.26.3",
+    "babel-eslint": "9.0.0",
+    "eslint": "5.5.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.14.0"
+  },
+  "dependencies": {
+    "config": "2.0.1",
+    "cors": "2.8.4",
+    "dotenv": "6.0.0",
+    "express": "4.16.3",
+    "ip": "1.1.5",
+    "knex": "0.15.2",
+    "pg": "7.4.3",
+    "strpad": "1.0.2"
+  }
+}
