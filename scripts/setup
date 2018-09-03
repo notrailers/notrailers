@@ -2,9 +2,6 @@
 
 set -x
 
-#Move .env where it needs to be
-mv api_env api/.env
-
 # Don't need it anymore
 rm git_rsa.enc
 
