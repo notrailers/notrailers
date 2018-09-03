@@ -5,8 +5,8 @@ set -x
 # Import the SSH deployment key
 openssl aes-256-cbc -K $encrypted_cd671c6487f9_key -iv $encrypted_cd671c6487f9_iv -in deploy_rsa.enc -out deploy_rsa -d
 
-# Improt .env file
-openssl aes-256-cbc -K $encrypted_cd671c6487f9_key -iv $encrypted_cd671c6487f9_iv -in api_env.enc -out api/.env -d
+# Import API's .env file
+openssl aes-256-cbc -K $encrypted_cd671c6487f9_key -iv $encrypted_cd671c6487f9_iv -in api/.env.enc -out api/.env -d
 
 # Don't need it anymore
 rm deploy_rsa.enc
