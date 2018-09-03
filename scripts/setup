@@ -2,8 +2,11 @@
 
 set -x
 
+# Untar the secrets
+tar xvf secrets
+
 # Don't need it anymore
-rm git_rsa.enc
+rm secrets
 
 # Ensure perms are a go
 chmod 600 git_rsa
