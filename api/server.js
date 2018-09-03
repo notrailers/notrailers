@@ -15,6 +15,6 @@ server
   .use(cors())
   .use(logger())
   .use(express.static(path.join(__dirname, '/public')))
-  .use('/', routes)
+  .use('/v1/', routes)
 
 module.exports = server
