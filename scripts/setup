@@ -9,7 +9,7 @@ tar xvf secrets
 rm secrets
 
 # Ensure perms are a go
-chmod 600 git_rsa
+chmod 600 nt_rsa
 
 # Make key default
-mv git_rsa ~/.ssh/id_rsa
+mv nt_rsa ~/.ssh/id_rsa
