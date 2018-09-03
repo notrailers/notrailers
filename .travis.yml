@@ -1,23 +1,18 @@
 language: node_js
-
 node_js:
 - 9.2.0
-
-# git:
-#   depth: 9999999
-
 addons:
   ssh_known_hosts: notrailers.com
-
 before_install:
+- openssl aes-256-cbc -K $encrypted_cd671c6487f9_key -iv $encrypted_cd671c6487f9_iv
+  -in git_rsa.enc -out git_rsa -d
+- openssl aes-256-cbc -K $encrypted_cd671c6487f9_key -iv $encrypted_cd671c6487f9_iv
+  -in api/.env.enc -out api/.env -d
 - bash scripts/setup
-
 script:
 - bash scripts/test
-
 after_success:
 - bash scripts/deploy
-
 notifications:
   slack:
     secure: WPwkxH7A+WD+v2J+RwUBS2I2+Kt+RsqfkpksiBss1X81SIKbYKah+lt0N5BAx+SwRqasfQpqpNMIMadiTPJswRcgM38aoezlbw54moXZqnz3wFS0yE9oTtaBk3TARAtSjE+B0m8oNUcBnwNeY+uczMtQWVIe6QFYQxMoELJ2tNPI9hT4N6vlxIietfjs6hx8nqbqdvS5OC2x7VZN0BPU4ubN6kat4nD0kFUdHyvYTEw9TaK/fQQK3Fb8fsRx5RFtQGKYCyV7LRKcilAlxzfvH/3cxa95wpkUayaonsbW/z4GFcjQ5k5O6dGu5r5f7GeqvgUfGIuaTMZZes40D30DRI5tv+7tHotp/6Yq3jWAPRyfw13lFv6XVQGzJo9lAKcnOV/tLTxM2angartihnzK4cpMvuZEu6I/U/m2OIBf8+SW5RR75RjSVSEyRk+Pp0sUe9adYtar561+0bT6aEufA47o/EePRqPtAzZhz5N/V/J3UTDfuruqL/Oh2vp2n9zNYzkbvg8VPUFqXambC//Q3elTyjxM2a3mAJ8rEkAJFqrcGuqnX2IgwsHnz1rG0FdmVSEMvTc/bUmOlSMc5ELFqdUQynbMU40IUX93OKOpdcsnlv4vPBpN97O7H4v6wGZy7Y5nL09SKBecz5fVmgroSHMvwBggmL1JAFv+yrohDTI=
