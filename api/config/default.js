@@ -19,7 +19,7 @@ module.exports = {
   // Port express is listening on
   port: 4000,
 
-  // NPM version
+  // App version
   version,
 
   // TMDb-related
