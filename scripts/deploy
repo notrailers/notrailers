@@ -1,0 +1,16 @@
+#!/bin/bash
+set -x
+
+git config user.name "Travis CI"
+git config user.email "watching@notrailers.com"
+
+if [ $TRAVIS_BRANCH == 'travis' ] ; then
+    # Add remote
+    git remote add deploy "git@notrailers.com:~/www"
+
+    git add .
+    git commit -m "Deploy"
+    git push --force deploy travis
+else
+    printf "\n\n\nNot deploying, since this branch isn't a deploy branch.\n\n\n"
+fi
