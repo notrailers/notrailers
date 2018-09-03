@@ -6,10 +6,10 @@ set -x
 openssl aes-256-cbc -K $encrypted_cd671c6487f9_key -iv $encrypted_cd671c6487f9_iv -in api/.env.enc -out api/.env -d
 
 # Don't need it anymore
-rm deploy_rsa.enc
+rm git_rsa.enc
 
 # Ensure perms are a go
-chmod 600 deploy_rsa
+chmod 600 git_rsa
 
 # Make key default
-mv deploy_rsa ~/.ssh/id_rsa
+mv git_rsa ~/.ssh/id_rsa
