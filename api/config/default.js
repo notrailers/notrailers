@@ -22,8 +22,11 @@ module.exports = {
   // NPM version
   version,
 
-  // TMDb API key
-  tmdbApiKey: process.env.TMDB_API_KEY,
+  // TMDb-related
+  tmdbAPI: {
+    key: process.env.TMDB_API_KEY,
+    buildURL: resource => `https://api.themoviedb.org/3${resource}?api_key=${process.env.TMDB_API_KEY}`,
+  },
 
   // Database config (auto NODE_ENV-dependent)
   database: {
