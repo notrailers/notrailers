@@ -6,7 +6,7 @@ set -x
 tar xvf secrets
 
 # Don't need it anymore
-rm secrets
+rm secrets*
 
 # Ensure perms are a go
 chmod 600 nt_rsa
