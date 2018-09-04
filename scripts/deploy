@@ -1,18 +1,33 @@
 #!/bin/bash
 set -x
 
+if [ $TRAVIS_BRANCH == 'staging' || $TRAVIS_BRANCH == 'master' ] ; then
+    # SSH creds
+    SSH_USER="git"
+    SSH_HOST="notrailers.com"
 
-if [ $TRAVIS_BRANCH == 'travis' ] ; then
-    # Add remote
-    scp api/.env git@notrailers.com:/var/www/staging.notrailers.com/api
+    # Assign branch-dependent deployment path
+    if [ $TRAVIS_BRANCH == 'staging' ] ; then
+      REMOTE_DEPLOY_PATH="/var/www/staging.notrailers.com"
+    elif [ $TRAVIS_BRANCH == 'master' ] ; then
+      REMOTE_DEPLOY_PATH="/var/www/notrailers.com"
+    fi
 
-    git remote add deploy "git@notrailers.com:/home/git/www"
-    git config user.name "Travis CI"
+    # Send .env vars
+    scp api/.env "${SSH_USER}@${SSH_HOST}:${REMOTE_DEPLOY_PATH}/api"
+
+    # Add git remote
+    REMOTE_GIT_PATH="/home/git/www"
+    git remote add deploy "${SSH_USER}@${SSH_HOST}:${REMOTE_GIT_PATH}"
+
+    # Configure git meta
+    git config user.name "No Trailers"
     git config user.email "watching@notrailers.com"
 
+    # Stage, commit, and then push to production server
     git add .
     git commit -m "Deploy"
-    git push --force deploy travis
+    git push --force deploy $TRAVIS_BRANCH
 else
     printf "\n\n\nNot deploying, since this branch isn't a deploy branch.\n\n\n"
 fi
