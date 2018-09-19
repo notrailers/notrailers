@@ -45,10 +45,12 @@ exports.up = (knex, Promise) => Promise
         .unsigned()
         .references('id')
         .inTable('people')
+        .onDelete('CASCADE')
       table.integer('movie_id')
         .unsigned()
         .references('id')
         .inTable('movies')
+        .onDelete('CASCADE')
 
       table.timestamps(true, true)
     }),
@@ -60,10 +62,12 @@ exports.up = (knex, Promise) => Promise
         .unsigned()
         .references('id')
         .inTable('movies')
+        .onDelete('CASCADE')
       table.integer('genre_id')
         .unsigned()
         .references('id')
         .inTable('genres')
+        .onDelete('CASCADE')
 
       table.timestamps(true, true)
     }),
