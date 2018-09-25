@@ -21,7 +21,7 @@ exports.up = (knex, Promise) => Promise
       table.increments()
       table.string('slug')
         .unique()
-      table.string('tmdb_id')
+      table.integer('tmdb_id')
         .unique()
         .index()
       table.string('imdb_id')

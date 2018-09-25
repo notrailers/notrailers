@@ -7,7 +7,11 @@ const handleResponseError = require('./handle-response-error')
 
 service.register({
   onResponse(response) {
-    return JSON.parse(response.data)
+    try {
+      return JSON.parse(response.data)
+    } catch (err) {
+      return response.data
+    }
   },
   onResponseError(error) {
     return handleResponseError(error, instance)
