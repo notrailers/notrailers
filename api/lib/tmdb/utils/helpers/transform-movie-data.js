@@ -1,3 +1,4 @@
+// Shape/Process data to  our liking
 const validCrewJobs = [
   'Director',
   'Writer',
@@ -8,16 +9,39 @@ const altWriterTitles = [
   'Novel',
 ]
 
+const filterPosters = ({ posters, originalLanguage }) => (
+  (
+    englishPosters => (
+      originalLanguage !== 'en' && englishPosters.length === 0
+        ? (
+          posters.filter(({ language: l }) => l === originalLanguage)
+        ) : (
+          englishPosters
+        )
+    )
+  )(
+    posters
+      .filter(({ language: l }) => l === 'en'),
+  )
+)
+
 module.exports = ({
+  release_date: releaseDate,
   genres,
+  original_language: originalLanguage,
   spoken_languages: spokenLanguages,
   credits: {
     cast,
     crew,
   },
-  year,
+  images: {
+    posters,
+  },
   ...rest
 }) => ({
+  // Account for empty release date
+  release_date: releaseDate || null,
+
   // Obviate language name & stringify for psql
   spoken_languages: JSON
     .stringify(spokenLanguages
@@ -26,13 +50,6 @@ module.exports = ({
   // Obviate genre IDs
   genres: genres
     .map(({ name }) => name),
-
-  // Give Letterboxd a default for now
-  letterboxd_rating: 0,
-
-  // From release_date => year
-  // OR 2016-04-13 => 2016
-  year: year.split('-')[0],
 
   // Give top four cast members the default job of 'actor'
   credits: cast
@@ -63,5 +80,29 @@ module.exports = ({
             })
         )),
     ),
+
+  posters: filterPosters({
+    posters: posters
+      .map(({
+        file_path: path,
+        iso_639_1: language,
+        /* eslint-disable */
+        aspect_ratio,
+        vote_average,
+        vote_count,
+        /* eslint-enable */
+      }) => ({
+        path,
+        language,
+        aspect_ratio,
+        vote_average,
+        vote_count,
+      })),
+    originalLanguage,
+  }),
+
+  // Put it back where it belongs
+  original_language: originalLanguage,
+
   ...rest,
 })
