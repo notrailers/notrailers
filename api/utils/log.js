@@ -24,9 +24,9 @@ class Log {
     this.clear()
   }
 
-  timer(label) {
+  timer(label = '') {
     if (this.timeStart) {
-      this.add(`${label} ${Date.now() - this.timeStart}ms`)
+      this.add(`${`${label} `}${Date.now() - this.timeStart}ms`)
       this.timeStart = false
     } else {
       this.timeStart = Date.now()
