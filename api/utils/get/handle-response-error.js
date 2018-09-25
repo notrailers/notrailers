@@ -2,22 +2,34 @@ const log = require('../log')
 
 module.exports = (error, instance) => {
   const {
-    config,
+    code = undefined,
+    config = {},
     response: {
-      status,
-      headers: { 'retry-after': retryAfter },
-    },
+      status = NaN,
+      headers: { 'retry-after': retryAfter = 0 } = {},
+    } = {},
+    syscall = undefined,
   } = error
+
+  const sleepAndRetry = ms => new Promise(resolve => setTimeout(resolve, ms))
+    .then(() => instance.request(config))
+
   if (config && status === 429) {
-    log.add('*=====================*')
-    log.add('* Hit TMDb rate limit *')
-    log.add('*=====================*')
-    log.add(config)
+    log.separator('/')
+    log.add('    Hit TMDb rate limit    ', 'center', '*')
+    log.separator('/')
     log.send('slack')
 
-    return new Promise(
-      resolve => setTimeout(resolve, retryAfter * 1000),
-    ).then(() => instance.request(config))
+    return sleepAndRetry(retryAfter * 1000)
+  }
+
+  if (syscall === 'getaddrinfo' && code === 'ENOTFOUND') {
+    log.separator('/')
+    log.add('    Error: ENOTFOUND: getaddrinfo    ', 'center', '*')
+    log.separator('/')
+    log.send('slack')
+
+    return sleepAndRetry(100)
   }
 
   return Promise.reject(error)

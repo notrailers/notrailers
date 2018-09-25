@@ -1,10 +1,9 @@
 const express = require('express')
+const moment = require('moment')
+const log = require('../../utils/log')
+const { findMovieBySlug } = require('./queries')
 
 const router = express.Router()
-
-const log = require('../../utils/log')
-
-const { getMovieBySlug } = require('../../database/movies')
 
 router.get('/movie/:slug', async (req, res) => {
   const {
@@ -13,24 +12,31 @@ router.get('/movie/:slug', async (req, res) => {
     },
   } = req
 
-  log.add(`Looking up movie by slug: ${slug}`)
-  log.timer()
-  const [movie] = await getMovieBySlug(slug)
-
-  if (!movie) {
-    log.add('=> nnable to locate movie in databas')
+  if (!slug) {
+    log.detail(`Received bad/malformed request (slug: ${slug})`, 'center')
     log.send('slack')
 
-    res
-      .status(404)
-      .json({
-        movie: false,
-      })
+    res.status(400).json({ movie: false })
     return
   }
 
-  log.add(`=> Found movie: ${movie.title} (${movie.year}`)
-  log.timer('=> database query took:')
+  log.separator('=')
+  log.add(`Received request for slug: ${slug}`, 'center')
+  log.separator('-')
+
+  const [movie] = await findMovieBySlug(slug)
+
+  if (!movie) {
+    log.detail('Unable to locate slug in database; returning')
+    log.separator('-')
+    log.send('slack')
+
+    res.status(404).json({ movie: false })
+    return
+  }
+
+  log.add(`Found movie: ${movie.title} (${moment(movie.release_date).format('YYYY-MM-DD')})`, 'center')
+  log.separator('-')
   log.send('slack')
 
   res.json({ movie })
